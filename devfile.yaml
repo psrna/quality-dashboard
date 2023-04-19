@@ -17,7 +17,7 @@ parent:
   id: go
   registryUrl: 'https://registry.devfile.io'
 components:
-  - name: image-build
+  - name: backend-build
     image:
       imageName: quality-dashboard-backend:latest
       dockerfile:
@@ -34,6 +34,27 @@ components:
       deployment/container-port: 8081
     kubernetes:
       uri: backend/deploy/base/deployment.yaml
+      endpoints:
+      - name: https
+        targetPort: 8443
+        path: /
+  - name: frontend-build
+    image:
+      imageName: quality-dashboard-frontend:latest
+      dockerfile:
+        uri: frontend/Dockerfile
+        buildContext: .
+        rootRequired: false
+  - name: kubernetes-deploy
+    attributes:
+      deployment/replicas: 1
+      deployment/cpuLimit: '100m'
+      deployment/cpuRequest: 10m
+      deployment/memoryLimit: 100Mi
+      deployment/memoryRequest: 10Mi
+      deployment/container-port: 8081
+    kubernetes:
+      uri: frontend/deploy/base/deployment.yaml
       endpoints:
       - name: https
         targetPort: 8443
