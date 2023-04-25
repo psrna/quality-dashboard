@@ -31,6 +31,9 @@ components:
       deployment/container-port: 8081
     kubernetes:
       uri: deploy/base/deployment.yaml
+  - name: db-deploy
+    kubernetes:
+      uri: deploy/overlays/local/postgres.yaml
 commands:
   - id: build-image
     apply:
