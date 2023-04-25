@@ -16,19 +16,12 @@ parent:
 components:
   - name: backend-build
     image:
-      imageName: go-image:latest
+      imageName: quality-dashboard-backend:latest
       dockerfile:
         uri: Dockerfile
         buildContext: .
         rootRequired: false
   - name: backend-deploy
-    attributes:
-      deployment/replicas: 1
-      deployment/cpuLimit: "100m"
-      deployment/cpuRequest: 10m
-      deployment/memoryLimit: 100Mi
-      deployment/memoryRequest: 10Mi
-      deployment/container-port: 8081
     kubernetes:
       uri: deploy/base/deployment.yaml
   - name: db-deploy
