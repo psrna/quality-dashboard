@@ -17,7 +17,7 @@ parent:
 components:
   - name: frontend-build
     image:
-      imageName: nodejs-image:latest
+      imageName: quality-dashboard-frontend:latest
       dockerfile:
         uri: Dockerfile
         buildContext: .
@@ -32,6 +32,8 @@ components:
       deployment/container-port: 3001
     kubernetes:
       uri: deploy/base/deployment.yaml
+      uri: deploy/base/service.yaml
+      uri: deploy/base/route.yaml
 commands:
   - id: build-image
     apply:
