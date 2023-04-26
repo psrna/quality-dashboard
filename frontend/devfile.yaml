@@ -8,7 +8,7 @@ metadata:
   projectType: "nodejs"
   language: "nodejs"
   attributes:
-    alpha.dockerimage-port: 3001
+    alpha.dockerimage-port: 8080
   provider: Red Hat
   supportUrl: https://github.com/devfile-samples/devfile-support#support-information
 parent:
@@ -29,11 +29,9 @@ components:
       deployment/cpuRequest: 10m
       deployment/memoryLimit: 100Mi
       deployment/memoryRequest: 50Mi
-      deployment/container-port: 3001
+      deployment/container-port: 8080
     kubernetes:
       uri: deploy/base/deployment.yaml
-      uri: deploy/base/service.yaml
-      uri: deploy/base/route.yaml
 commands:
   - id: build-image
     apply:

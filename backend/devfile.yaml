@@ -9,7 +9,7 @@ metadata:
   provider: Red Hat
   supportUrl: https://github.com/devfile-samples/devfile-support#support-information
   attributes:
-    alpha.dockerimage-port: 8081
+    alpha.dockerimage-port: 8080
 parent:
   id: go
   registryUrl: "https://registry.devfile.io"
@@ -22,14 +22,15 @@ components:
         buildContext: .
         rootRequired: false
   - name: backend-deploy
+    attributes:
+      deployment/replicas: 1
+      deployment/cpuLimit: '500m'
+      deployment/cpuRequest: 300m
+      deployment/memoryLimit: 1Gi
+      deployment/memoryRequest: 512Mi
+      deployment/container-port: 8080
     kubernetes:
       uri: deploy/base/deployment.yaml
-      uri: deploy/base/service.yaml
-      uri: deploy/base/route.yaml
-  - name: db-deploy
-    kubernetes:
-      uri: deploy/overlays/local/postgres.yaml
-      uri: deploy/overlays/local/postgresService.yaml
 commands:
   - id: build-image
     apply:
@@ -37,7 +38,6 @@ commands:
   - id: deployk8s
     apply:
       component: backend-deploy
-      component: db-deploy
   - id: deploy
     composite:
       commands:
